@@ -60,7 +60,7 @@ class Trading212():
 
             email_el = self.__driver.find_element(By.ID, "username-real")
             pass_el = self.__driver.find_element(By.ID, "pass-real")
-
+            sleep(2)
             email_el.send_keys(self.__USERNAME)
             pass_el.send_keys(self.__PASSWORD)
 
@@ -68,7 +68,7 @@ class Trading212():
             login_el = self.__driver.find_element(By.CLASS_NAME, "button-login")
             login_el.click()
             # logger.debug(f'Webdriver logging in......{self.__USERNAME}')
-            WebDriverWait(self.__driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "account-menu-button")))
+            WebDriverWait(self.__driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "account-menu-button")))
 
             # resume = self.__driver.find_element(By.CLASS_NAME, "btn btn-primary")
             # if (resume):
@@ -83,26 +83,19 @@ class Trading212():
         """
 
         cookie = None
+        logger.debug('Webdriver capturing the cookie......')
+        self.__driver.get(self.base_url)
+        sleep(3)
         try:
-            logger.debug('Webdriver capturing the cookie......')
-            self.__driver.get(self.base_url)
-
             acc_panel = WebDriverWait(self.__driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "account-menu-button")))
             acc_panel.click()
 
             invest_mode = WebDriverWait(self.__driver, 10).until(EC.presence_of_element_located((By.ID, "equitySwitchButton")))
             invest_mode.click()
-
-            cookie = self.__driver.get_cookies()
-            # data = ""
-            # cookies = (self.__driver.get_cookies())
-            # for cookie in cookies:
-            #     new_key = str(cookie['name']) + "=" + str(cookie['value']) +"; "
-            #     data += new_key
-            #     self.__cookie = data
-            logger.debug("success capturing the cookie")
         except Exception as exe:
             logger.warning(f'Unable to get the cookie.{exe}')
+        cookie = self.__driver.get_cookies()
+        logger.debug("success capturing the cookie")
         return cookie
 
     def set_session(self):
