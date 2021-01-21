@@ -31,9 +31,9 @@ class Trading212():
             self.base_url = "https://live.trading212.com"
 
     def start(self):
-    	"""
-    	Choose a browser and start the webdriver
-    	"""
+        """
+        Choose a browser and start the webdriver
+        """
         if self.browser == 'Chrome':
             browser_options = chrome_options()
             browser_options.add_argument("--headless")
@@ -51,9 +51,9 @@ class Trading212():
         logger.debug('Webdriver Started')
 
     def login(self):
-    	"""
-    	Login on trading212
-    	"""
+        """
+        Login on trading212
+        """
         logger.debug('Webdriver logging in......')
         try:
             self.__driver.get("https://www.trading212.com/en/login")

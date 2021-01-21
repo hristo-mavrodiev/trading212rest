@@ -12,9 +12,9 @@ api = Trading212(USERNAME, PASSWORD, DEMO_MODE = True)
 
 class TestMethods(unittest.TestCase):
     def test_000_zero(self):
-    	"""
-    	000. Zero test
-    	"""
+        """
+        000. Zero test
+        """
         logger.debug("Sample test to test the testings :)")
         self.assertEqual(":)", ":)")
 
