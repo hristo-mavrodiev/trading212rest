@@ -19,3 +19,11 @@ def get_request(url, headers, cookies):
     else:
         logger.warning(f'Request code not ok......{res.status_code} - {res.json()}')
         return None
+
+def delayed_click(element, seconds):
+    for _ in range(10):
+        try:
+            element.click()
+            return
+        except:
+            sleep(seconds)

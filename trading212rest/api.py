@@ -3,7 +3,7 @@ from time import sleep
 import json
 
 from trading212rest.logger import logger, logging
-from trading212rest.funcs import get_request
+from trading212rest.funcs import get_request, delayed_click
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as chrome_options
@@ -87,10 +87,12 @@ class Trading212():
         self.__driver.get(self.base_url)
         sleep(3)
         try:
-            acc_panel = WebDriverWait(self.__driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "account-menu-button")))
-            acc_panel.click()
+            WebDriverWait(self.__driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "account-menu-button")))
+            acc_panel = self.__driver.find_element(By.CLASS_NAME, "account-menu-button")
+            delayed_click(acc_panel, 1)
 
-            invest_mode = WebDriverWait(self.__driver, 10).until(EC.presence_of_element_located((By.ID, "equitySwitchButton")))
+            WebDriverWait(self.__driver, 10).until(EC.presence_of_element_located((By.ID, "equitySwitchButton")))
+            invest_mode = self.__driver.find_element(By.ID, "equitySwitchButton")
             invest_mode.click()
         except Exception as exe:
             logger.warning(f'Unable to get the cookie.{exe}')
